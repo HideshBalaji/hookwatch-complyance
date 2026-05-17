@@ -38,7 +38,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             // Resume background polling after full page refresh
             const interval = setInterval(async () => {
                 try {
-                    const statusRes = await fetch(`http://127.0.0.1:8000/api/v1/webhooks/upload/status/${parsed.taskId}`);
+                    const statusRes = await fetch(`https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/status/${parsed.taskId}`);
                     if (statusRes.ok) {
                         const statusData = await statusRes.json();
                         if (statusData.status === 'processing') {

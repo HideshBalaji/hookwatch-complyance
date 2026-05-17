@@ -1,6 +1,6 @@
 # HookWatch — Webhook Reliability & Replay Intelligence Platform
 
-HookWatch is an intelligent webhook reliability and replay analysis platform built for the **Complyance Hackathon 2026**. 
+HookWatch is an intelligent webhook reliability and replay analysis platform built for the **Complyance Hackathon 2026**.
 
 The system monitors webhook delivery attempts, analyzes retry patterns, detects anomalies, predicts replay safety, and generates operational recovery recommendations using Machine Learning.
 
@@ -11,6 +11,7 @@ The system monitors webhook delivery attempts, analyzes retry patterns, detects 
 We have successfully completed **Phases 1, 2, and 3** of the MVP! The backend is now a fully operational Machine Learning API powered by FastAPI, Supabase PostgreSQL, Pandas, and XGBoost.
 
 **Key Achievements:**
+
 1. **Database Architecture:** Seamlessly converted raw CSV data into a fully relational Supabase PostgreSQL schema using SQLAlchemy ORM.
 2. **Automated ETL Pipeline:** Engineered a Pandas script (`load_data.py`) to bulk load 35,000+ delivery logs into the production database.
 3. **Analytics Engine:** Built aggregation services to detect endpoint instability, retry decay patterns, and replay frequency.
@@ -23,18 +24,21 @@ We have successfully completed **Phases 1, 2, and 3** of the MVP! The backend is
 ## 🛠 Tech Stack
 
 ### Frontend (Pending - Phase 4)
-* React
-* Tailwind CSS
+
+- React
+- Tailwind CSS
 
 ### Backend & Database
-* **API Framework:** FastAPI
-* **Database:** Supabase PostgreSQL
-* **ORM:** SQLAlchemy / psycopg2
+
+- **API Framework:** FastAPI
+- **Database:** Supabase PostgreSQL
+- **ORM:** SQLAlchemy / psycopg2
 
 ### Data Processing & Machine Learning
-* **ETL & Feature Engineering:** Pandas
-* **Classification (Replay Safety):** XGBoost
-* **Anomaly Detection:** scikit-learn (Isolation Forest)
+
+- **ETL & Feature Engineering:** Pandas
+- **Classification (Replay Safety):** XGBoost
+- **Anomaly Detection:** scikit-learn (Isolation Forest)
 
 ---
 
@@ -82,11 +86,15 @@ backend/
 ## 🌐 Live API Endpoints
 
 ### 1. Replay Intelligence
+
 Predicts if a failed event is safe to replay, detects anomalies, and issues operational recommendations.
+
 ```http
 GET /api/v1/intelligence/{event_id}
 ```
+
 **Sample Response:**
+
 ```json
 {
   "event_id": "evt_dup_c43c568e",
@@ -103,7 +111,9 @@ GET /api/v1/intelligence/{event_id}
 ```
 
 ### 2. Analytics Dashboard Routes
+
 Used to populate the upcoming frontend React dashboard.
+
 ```http
 GET /api/v1/analytics/endpoints/instability
 GET /api/v1/analytics/retry/patterns
@@ -115,72 +125,88 @@ GET /api/v1/analytics/replays
 ## ⚙️ Setup Instructions
 
 ### 1. Create Virtual Environment
+
 ```bash
 cd backend
 python -m venv venv
 ```
 
 ### 2. Activate Environment
+
 **Windows:**
+
 ```bash
 venv\Scripts\activate
 ```
+
 **Linux / Mac:**
+
 ```bash
 source venv/bin/activate
 ```
 
 ### 3. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Setup Database
+
 Create a `.env` file in the `backend/` directory with your Supabase credentials:
+
 ```env
 DATABASE_URL=postgresql://postgres.yourproject:encoded%40password@aws-0-region.pooler.supabase.com:6543/postgres
 ```
 
 ### 5. Run the Server
+
 ```bash
 uvicorn main:app --reload
 ```
-Navigate to `http://127.0.0.1:8000/docs` to test the API!
+
+Navigate to `https://hookwatch-backend.onrender.com/docs` to test the API!
 
 ---
 
 ## 🗺 MVP Roadmap
 
 ✅ **Phase 1: Foundation**
-* Dataset Generation
-* PostgreSQL Schema & Config
-* FastAPI Setup
+
+- Dataset Generation
+- PostgreSQL Schema & Config
+- FastAPI Setup
 
 ✅ **Phase 2: Data Pipeline**
-* Bulk DB Ingestion (Pandas)
-* Feature Engineering (`features.csv`)
-* Retry Pattern Analysis
+
+- Bulk DB Ingestion (Pandas)
+- Feature Engineering (`features.csv`)
+- Retry Pattern Analysis
 
 ✅ **Phase 3: Replay Intelligence (AI)**
-* Classification Model (XGBoost)
-* Anomaly Detection (Isolation Forest)
-* Intelligence API Endpoints
+
+- Classification Model (XGBoost)
+- Anomaly Detection (Isolation Forest)
+- Intelligence API Endpoints
 
 🚀 **Phase 4: Frontend (Up Next)**
-* React + Tailwind Development
-* HookWatch Operational Dashboard
-* Replay Timeline Visualization
+
+- React + Tailwind Development
+- HookWatch Operational Dashboard
+- Replay Timeline Visualization
 
 ⏳ **Phase 5: Final Polish**
-* End-to-End Integration
-* Demo Flow
+
+- End-to-End Integration
+- Demo Flow
 
 ---
 
 ## 👨‍💻 Team 4BIT
-**Complyance Hackathon 2026**
-*Problem Statement ID: 5*
 
-* Madhu Sankar S
-* Hidesh Balaji C U
-* Deepak Krishna Kumar
+**Complyance Hackathon 2026**
+_Problem Statement ID: 5_
+
+- Madhu Sankar S
+- Hidesh Balaji C U
+- Deepak Krishna Kumar

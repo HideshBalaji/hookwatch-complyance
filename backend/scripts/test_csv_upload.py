@@ -3,7 +3,7 @@ import urllib.parse
 import os
 
 # Configuration
-URL = 'http://127.0.0.1:8000/api/v1/webhooks/upload/csv?user_id=user_1'
+URL = 'https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/csv?user_id=user_1'
 FILE_PATH = 'datasets/sample_upload.csv'
 
 boundary = '----WebKitFormBoundary7MA4YWxkTrZu0gW'

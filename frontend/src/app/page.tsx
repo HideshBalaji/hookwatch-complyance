@@ -37,7 +37,7 @@ export default function Dashboard() {
 
   const fetchAnalytics = async (userId: string) => {
     try {
-        const res = await fetch(`http://127.0.0.1:8000/api/v1/auth/analytics?user_id=${userId}`);
+        const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/auth/analytics?user_id=${userId}`);
         if(res.ok) setAnalytics(await res.json());
     } catch(e) {}
   };
@@ -45,7 +45,7 @@ export default function Dashboard() {
   const fetchWebhooks = async (userId: string, currentPage: number) => {
     setLoadingWebhooks(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/auth/webhooks?user_id=${userId}&page=${currentPage}&limit=15`);
+      const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/auth/webhooks?user_id=${userId}&page=${currentPage}&limit=15`);
       if (res.ok) {
         const payload = await res.json();
         setWebhooks(payload.data || []);
@@ -71,12 +71,12 @@ export default function Dashboard() {
     setIntelligence(null);
     
     try {
-        const res = await fetch(`http://127.0.0.1:8000/api/v1/webhooks/${eventId}`);
+        const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/webhooks/${eventId}`);
         if(res.ok) setEventDetails(await res.json());
     } catch(e) {}
     
     try {
-        const res2 = await fetch(`http://127.0.0.1:8000/api/v1/intelligence/${eventId}`);
+        const res2 = await fetch(`https://hookwatch-backend.onrender.com/api/v1/intelligence/${eventId}`);
         if(res2.ok) {
             setIntelligence(await res2.json());
         } else {
@@ -100,7 +100,7 @@ export default function Dashboard() {
     formData.append('file', file);
     
     try {
-        const res = await fetch(`http://127.0.0.1:8000/api/v1/webhooks/upload/csv?user_id=${userId}`, {
+        const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/csv?user_id=${userId}`, {
             method: 'POST',
             body: formData
         });

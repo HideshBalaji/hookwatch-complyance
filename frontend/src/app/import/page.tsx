@@ -45,7 +45,7 @@ export default function ImportData() {
     formData.append('file', file);
     
     try {
-        const res = await fetch(`http://127.0.0.1:8000/api/v1/webhooks/upload/csv?user_id=${userId}`, {
+        const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/csv?user_id=${userId}`, {
             method: 'POST',
             body: formData
         });
@@ -56,7 +56,7 @@ export default function ImportData() {
             showToast({ message: "Task registered. Beginning ingestion...", type: "loading", taskId: taskId });
             const interval = setInterval(async () => {
                 try {
-                    const statusRes = await fetch(`http://127.0.0.1:8000/api/v1/webhooks/upload/status/${taskId}`);
+                    const statusRes = await fetch(`https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/status/${taskId}`);
                     if (statusRes.ok) {
                         const statusData = await statusRes.json();
                         if (statusData.status === 'processing') {
@@ -94,7 +94,7 @@ export default function ImportData() {
         const parsedData = JSON.parse(jsonInput);
         const endpoint = activeTab === 'json_bulk' ? 'upload/bulk' : 'upload';
         
-        const res = await fetch(`http://127.0.0.1:8000/api/v1/webhooks/${endpoint}?user_id=${userId}`, {
+        const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/webhooks/${endpoint}?user_id=${userId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(parsedData)
