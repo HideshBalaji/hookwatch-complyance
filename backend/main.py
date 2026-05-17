@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from app.database.db import engine, Base
+import app.models.webhook  # Import models to register them with Base
 
 Base.metadata.create_all(bind=engine)
 
