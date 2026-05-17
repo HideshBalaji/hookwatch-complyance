@@ -45,7 +45,7 @@ export default function Dashboard() {
   const fetchWebhooks = async (userId: string, currentPage: number) => {
     setLoadingWebhooks(true);
     try {
-      const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/auth/webhooks?user_id=${userId}&page=${currentPage}&limit=15`);
+      const res = await fetch(`https://hookwatch-backend.onrender.com/api/v1/auth/webhooks?user_id=${userId}&page=${currentPage}&limit=5`);
       if (res.ok) {
         const payload = await res.json();
         setWebhooks(payload.data || []);
