@@ -1,0 +1,6 @@
+event_id,event_type,customer_id,endpoint_id,attempt_number,http_status,response_time_ms,timeout,signature_valid
+evt_001,invoice.paid,cust_0042,ep_001,1,504,4200,true,true
+evt_001,invoice.paid,cust_0042,ep_001,2,500,3100,false,true
+evt_001,invoice.paid,cust_0042,ep_001,3,200,210,false,true
+evt_002,user.created,cust_0099,ep_002,1,401,120,false,false
+evt_003,payment.failed,cust_0042,ep_001,1,502,5100,true,true
