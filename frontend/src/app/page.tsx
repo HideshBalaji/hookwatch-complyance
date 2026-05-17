@@ -114,7 +114,12 @@ export default function Dashboard() {
   };
 
   if (!isAuthenticated) {
-    return <div className="flex h-screen bg-zinc-950 items-center justify-center"></div>;
+    return (
+      <div className="flex h-screen bg-zinc-950 items-center justify-center text-zinc-500 flex-col gap-3">
+        <Activity className="w-6 h-6 animate-pulse" />
+        <span className="text-sm">Redirecting to login...</span>
+      </div>
+    );
   }
 
   return (
