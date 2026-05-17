@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from app.database.db import engine, Base
 import app.models.webhook  # Import models to register them with Base
+from app.api import intelligence, analytics
 
 Base.metadata.create_all(bind=engine)
 
@@ -19,6 +20,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(intelligence.router, prefix="/api/v1", tags=["intelligence"])
+app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
 
 @app.get("/")
 async def root():
@@ -51,3 +55,5 @@ async def version():
     return {
         "version":"1.0.0"
     }
+
+# Triggering reload to load the newly generated ML models!
