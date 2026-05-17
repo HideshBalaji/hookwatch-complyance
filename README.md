@@ -1,331 +1,186 @@
-# HookWatch — Backend
+# HookWatch — Webhook Reliability & Replay Intelligence Platform
 
-HookWatch is an intelligent webhook reliability and replay analysis platform built for Complyance Hackathon 2026.
+HookWatch is an intelligent webhook reliability and replay analysis platform built for the **Complyance Hackathon 2026**. 
 
-The system monitors webhook delivery attempts, analyzes retry patterns, detects anomalies, predicts replay safety, and generates operational recovery recommendations.
-
----
-
-# Problem Statement
-
-Modern invoice systems rely on webhooks to synchronize important events such as:
-
-* invoice creation
-* payment updates
-* compliance status
-
-However, webhook deliveries often fail due to:
-
-* endpoint downtime
-* invalid signatures
-* rate limits
-* network timeouts
-* malformed responses
-* duplicate retries
-
-HookWatch helps reliability engineers and operations teams understand:
-
-* what happened
-* why it failed
-* whether replaying is safe
-* what action should be taken next
+The system monitors webhook delivery attempts, analyzes retry patterns, detects anomalies, predicts replay safety, and generates operational recovery recommendations using Machine Learning.
 
 ---
 
-# Core Features
+## 🚀 Current Project State
 
-* Webhook delivery analysis
-* Retry pattern intelligence
-* Replay safety prediction
-* Endpoint reliability monitoring
-* Operational recovery recommendations
-* Anomaly detection for abnormal webhook behavior
-* Delivery state classification
-* Risk scoring and replay intelligence
+We have successfully completed **Phases 1, 2, and 3** of the MVP! The backend is now a fully operational Machine Learning API powered by FastAPI, Supabase PostgreSQL, Pandas, and XGBoost.
+
+**Key Achievements:**
+1. **Database Architecture:** Seamlessly converted raw CSV data into a fully relational Supabase PostgreSQL schema using SQLAlchemy ORM.
+2. **Automated ETL Pipeline:** Engineered a Pandas script (`load_data.py`) to bulk load 35,000+ delivery logs into the production database.
+3. **Analytics Engine:** Built aggregation services to detect endpoint instability, retry decay patterns, and replay frequency.
+4. **ML Feature Engineering:** Automated the extraction and transformation of raw logs into a clean, mathematically-ready ML matrix (`features.csv`).
+5. **Replay Intelligence (AI):** Trained an **XGBoost Classifier** to predict webhook recovery and an **Isolation Forest** model to flag anomalous webhook traffic.
+6. **Live API:** Exposed the entire ML pipeline through RESTful FastAPI endpoints.
 
 ---
 
-# Tech Stack
+## 🛠 Tech Stack
 
-## Frontend
-
+### Frontend (Pending - Phase 4)
 * React
 * Tailwind CSS
 
-## Backend
+### Backend & Database
+* **API Framework:** FastAPI
+* **Database:** Supabase PostgreSQL
+* **ORM:** SQLAlchemy / psycopg2
 
-* FastAPI
-
-## Database
-
-* PostgreSQL
-
-## Data Processing & ML
-
-* Pandas
-* XGBoost
-* Isolation Forest
+### Data Processing & Machine Learning
+* **ETL & Feature Engineering:** Pandas
+* **Classification (Replay Safety):** XGBoost
+* **Anomaly Detection:** scikit-learn (Isolation Forest)
 
 ---
 
-# Architecture Overview
-
-```text
-Webhook Events
-        ↓
-FastAPI Backend
-        ↓
-Webhook Processing & Validation
-        ↓
-PostgreSQL Storage
-        ↓
-Data Processing (Pandas)
-        ↓
-Anomaly Detection (Isolation Forest)
-        ↓
-Prediction & Classification (XGBoost)
-        ↓
-Replay Intelligence & Dashboard
-```
-
----
-
-# Dataset Information
-
-Synthetic datasets were generated to simulate realistic webhook delivery systems.
-
-## Dataset Statistics
-
-* Webhook Events: 12,720
-* Delivery Attempts: 35,436
-* Endpoints: 600
-* Replay Actions: 3,523
-* Train Labels: 12,720
-* Test Events: 3,180
-
-## Generated Files
-
-```text
-datasets/
-├── webhook_events.csv
-├── delivery_attempts.csv
-├── endpoints.csv
-├── replay_actions.csv
-├── labels_train.csv
-└── events_test.csv
-```
-
----
-
-# Folder Structure
+## 📂 Architecture & Folder Structure
 
 ```text
 backend/
 ├── app/
 │   ├── api/
-│   ├── core/
+│   │   ├── analytics.py       # REST endpoints for dashboard analytics
+│   │   └── intelligence.py    # REST endpoint for ML inference
 │   ├── database/
+│   │   └── db.py              # Supabase PostgreSQL engine configuration
 │   ├── models/
-│   ├── schemas/
-│   ├── services/
+│   │   └── webhook.py         # SQLAlchemy DB schemas
 │   ├── ml/
+│   │   ├── models/            # Serialized .pkl ML models
+│   │   ├── feature_engineering.py  # Builds ML features matrix
+│   │   └── train_models.py    # Trains XGBoost & Isolation Forest
+│   ├── services/
+│   │   ├── analytics.py       # Pandas-driven database aggregations
+│   │   └── intelligence.py    # Merges ML models with business rules
 │   └── utils/
 │
-├── datasets/
-│   ├── webhook_events.csv
-│   ├── delivery_attempts.csv
-│   ├── endpoints.csv
-│   ├── replay_actions.csv
-│   ├── labels_train.csv
-│   └── events_test.csv
-│
+├── datasets/                  # Raw simulated logs
+│   └── processed/             # Cleaned features.csv for model training
 ├── scripts/
-│   └── generate_dataset.py
+│   └── load_data.py           # Ingests CSVs to Supabase using Pandas
 │
-├── docs/
 ├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-├── .env.example
-├── README.md
-└── main.py
+├── .env                       # (Contains DATABASE_URL)
+└── main.py                    # FastAPI root application
 ```
 
 ---
 
-# ML Workflow
+## 🧠 Machine Learning Workflow
 
-## Data Processing
-
-Pandas is used for:
-
-* feature engineering
-* retry pattern analysis
-* time-series processing
-* preprocessing webhook delivery logs
-
-## Anomaly Detection
-
-Isolation Forest detects:
-
-* retry bursts
-* endpoint instability
-* replay spikes
-* abnormal delivery behavior
-
-## Prediction Engine
-
-XGBoost predicts:
-
-* delivery state
-* failure reason
-* replay safety
-* operational risk score
+1. **Feature Engineering:** Pandas computes features like `retry_count`, `timeout_ratio`, and `endpoint_health_score`, explicitly dropping variables that cause data leakage.
+2. **Anomaly Detection (Isolation Forest):** Detects highly abnormal payloads, retry bursts, or instability representing the top ~5% outlier events.
+3. **Prediction Engine (XGBoost):** Classifies the failed webhook event. It dynamically handles the 85/15 class imbalance using `scale_pos_weight` and predicts if an event will gracefully recover if replayed.
 
 ---
 
-# Delivery States
+## 🌐 Live API Endpoints
 
-The system classifies events into:
-
-* delivered
-* retrying
-* failed
-* expired
-* duplicate
-* recovered
-* unsafe_to_replay
-
----
-
-# Sample Prediction Output
-
+### 1. Replay Intelligence
+Predicts if a failed event is safe to replay, detects anomalies, and issues operational recommendations.
+```http
+GET /api/v1/intelligence/{event_id}
+```
+**Sample Response:**
 ```json
 {
-  "event_id": "evt_8b21a9",
+  "event_id": "evt_dup_c43c568e",
   "delivery_state": "recovered",
   "failure_reason": "timeout",
-  "attempts": 3,
-  "safe_to_replay": false,
-  "risk_score": 0.91,
-  "priority": "mid"
+  "safe_to_replay": true,
+  "is_anomaly": false,
+  "recommended_action": "trigger_auto_replay",
+  "metrics": {
+    "endpoint_health": 0.85,
+    "timeout_ratio": 0.0
+  }
 }
 ```
 
----
-
-# Setup Instructions
-
-## Clone Repository
-
-```bash
-git clone <repo-url>
-cd backend
+### 2. Analytics Dashboard Routes
+Used to populate the upcoming frontend React dashboard.
+```http
+GET /api/v1/analytics/endpoints/instability
+GET /api/v1/analytics/retry/patterns
+GET /api/v1/analytics/replays
 ```
 
-## Create Virtual Environment
+---
 
+## ⚙️ Setup Instructions
+
+### 1. Create Virtual Environment
 ```bash
+cd backend
 python -m venv venv
 ```
 
-## Activate Environment
-
-### Windows
-
+### 2. Activate Environment
+**Windows:**
 ```bash
-venv\\Scripts\\activate
+venv\Scripts\activate
 ```
-
-### Linux / Mac
-
+**Linux / Mac:**
 ```bash
 source venv/bin/activate
 ```
 
-## Install Dependencies
-
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run FastAPI Server
+### 4. Setup Database
+Create a `.env` file in the `backend/` directory with your Supabase credentials:
+```env
+DATABASE_URL=postgresql://postgres.yourproject:encoded%40password@aws-0-region.pooler.supabase.com:6543/postgres
+```
 
+### 5. Run the Server
 ```bash
 uvicorn main:app --reload
 ```
+Navigate to `http://127.0.0.1:8000/docs` to test the API!
 
 ---
 
-# API Endpoints
+## 🗺 MVP Roadmap
 
-## Health Check
-
-```http
-GET /health
-```
-
-## Ingest Webhook Event
-
-```http
-POST /webhooks
-```
-
-## Fetch Events
-
-```http
-GET /events
-```
-
-## Analytics & Predictions
-
-```http
-GET /analytics
-```
-
----
-
-# MVP Roadmap
-
-## Phase 1
-
+✅ **Phase 1: Foundation**
 * Dataset Generation
-* PostgreSQL Schema
+* PostgreSQL Schema & Config
 * FastAPI Setup
 
-## Phase 2
-
-* Feature Engineering
+✅ **Phase 2: Data Pipeline**
+* Bulk DB Ingestion (Pandas)
+* Feature Engineering (`features.csv`)
 * Retry Pattern Analysis
-* Rule Engine
 
-## Phase 3
+✅ **Phase 3: Replay Intelligence (AI)**
+* Classification Model (XGBoost)
+* Anomaly Detection (Isolation Forest)
+* Intelligence API Endpoints
 
-* Classification
-* Anomaly Detection
-* Replay Intelligence
+🚀 **Phase 4: Frontend (Up Next)**
+* React + Tailwind Development
+* HookWatch Operational Dashboard
+* Replay Timeline Visualization
 
-## Phase 4
-
-* UI/UX Development
-* Retry Timeline Visualization
-* Endpoint Monitoring
-
-## Phase 5
-
-* Integration
+⏳ **Phase 5: Final Polish**
+* End-to-End Integration
 * Demo Flow
-* Final Polish
 
 ---
 
-# Team
-
-Team 4BIT
+## 👨‍💻 Team 4BIT
+**Complyance Hackathon 2026**
+*Problem Statement ID: 5*
 
 * Madhu Sankar S
 * Hidesh Balaji C U
 * Deepak Krishna Kumar
-
-Complyance Hackathon 2026
-Problem Statement ID: 5
