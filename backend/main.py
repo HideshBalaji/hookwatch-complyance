@@ -1,5 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
+from app.database.db import engine, Base
+
+Base.metadata.create_all(bind=engine)
 
 app=FastAPI(
     title="HookWatch API",
@@ -29,9 +33,20 @@ async def health():
         "status":"healthy"
     }
 
+@app.get("/test-db")
+async def test_db():
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+        return {
+            "status": "success",
+            "message": "Successfully connected to the database!"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")
+
 @app.get("/version")
 async def version():
     return {
         "version":"1.0.0"
     }
-
