@@ -1,0 +1,11 @@
+event_id,event_type,customer_id,endpoint_id,attempt_number,http_status,response_time_ms,timeout,signature_valid
+evt_sig_001,payment.succeeded,cust_001,end_001,1,401,50.0,false,false
+evt_sig_002,invoice.created,cust_002,end_002,1,401,45.0,false,false
+evt_sig_003,order.placed,cust_003,end_003,1,401,60.0,false,false
+evt_sig_004,customer.created,cust_001,end_001,1,200,90.0,false,true
+evt_sig_005,payment.succeeded,cust_004,end_004,1,401,55.0,false,false
+evt_sig_006,invoice.paid,cust_002,end_002,1,401,40.0,false,false
+evt_sig_007,order.fulfilled,cust_003,end_003,1,401,65.0,false,false
+evt_sig_008,payment.failed,cust_004,end_004,1,401,50.0,false,false
+evt_sig_009,invoice.created,cust_001,end_001,1,401,45.0,false,false
+evt_sig_010,order.placed,cust_002,end_002,1,401,55.0,false,false

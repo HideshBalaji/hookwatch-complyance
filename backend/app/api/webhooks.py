@@ -301,6 +301,13 @@ def process_csv_background(task_id: str, df: pd.DataFrame, user_id: str):
         UPLOAD_STATUS[task_id]["processed"] = events_processed
         UPLOAD_STATUS[task_id]["attempts_processed"] = attempts_processed
         
+        # Send email summary
+        try:
+            from app.services.mailer import send_upload_summary
+            send_upload_summary(user_id, events_processed, attempts_processed)
+        except Exception as e:
+            print(f"Failed to send email summary: {e}")
+        
     except Exception as e:
         db.rollback()
         UPLOAD_STATUS[task_id]["status"] = "failed"
@@ -347,3 +354,28 @@ def get_upload_status(task_id: str):
     if task_id not in UPLOAD_STATUS:
         raise HTTPException(status_code=404, detail="Task not found")
     return UPLOAD_STATUS[task_id]
+
+
+@router.post("/{event_id}/send-mail")
+def send_event_analysis_mail(event_id: str, user_id: str):
+    """
+    Sends the analysis of a specific event to the user's email.
+    """
+    from app.services.intelligence import get_event_intelligence
+    from app.services.mailer import send_event_analysis
+    
+    try:
+        # Get intelligence analysis
+        analysis = get_event_intelligence(event_id)
+        
+        # Send email
+        success = send_event_analysis(user_id, event_id, analysis)
+        
+        if success:
+            return {"status": "success", "message": "Email sent successfully"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to send email")
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
