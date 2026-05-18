@@ -56,7 +56,7 @@ export default function Dashboard() {
   const fetchAnalytics = async (userId: string) => {
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/auth/analytics?user_id=${userId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/auth/analytics?user_id=${userId}`,
       );
       if (res.ok) setAnalytics(await res.json());
     } catch (e) {}
@@ -66,7 +66,7 @@ export default function Dashboard() {
     setLoadingWebhooks(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/auth/webhooks?user_id=${userId}&page=${currentPage}&limit=5`,
+        `https://hookwatch-backend.onrender.com/api/v1/auth/webhooks?user_id=${userId}&page=${currentPage}&limit=5`,
       );
       if (res.ok) {
         const payload = await res.json();
@@ -94,14 +94,14 @@ export default function Dashboard() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/webhooks/${eventId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/webhooks/${eventId}`,
       );
       if (res.ok) setEventDetails(await res.json());
     } catch (e) {}
 
     try {
       const res2 = await fetch(
-        `http://127.0.0.1:8000/api/v1/intelligence/${eventId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/intelligence/${eventId}`,
       );
       if (res2.ok) {
         setIntelligence(await res2.json());
@@ -127,7 +127,7 @@ export default function Dashboard() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/webhooks/upload/csv?user_id=${userId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/csv?user_id=${userId}`,
         {
           method: "POST",
           body: formData,
@@ -526,7 +526,7 @@ export default function Dashboard() {
                                 localStorage.getItem("hookwatch_user_id");
                               try {
                                 const res = await fetch(
-                                  `http://127.0.0.1:8000/api/v1/webhooks/${selectedEventId}/send-mail?user_id=${userId}`,
+                                  `https://hookwatch-backend.onrender.com/api/v1/webhooks/${selectedEventId}/send-mail?user_id=${userId}`,
                                   { method: "POST" },
                                 );
                                 if (res.ok) {

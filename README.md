@@ -165,7 +165,7 @@ DATABASE_URL=postgresql://postgres.yourproject:encoded%40password@aws-0-region.p
 uvicorn main:app --reload
 ```
 
-Navigate to `http://127.0.0.1:8000/docs` to test the API!
+Navigate to `https://hookwatch-backend.onrender.com/docs` to test the API!
 
 ---
 

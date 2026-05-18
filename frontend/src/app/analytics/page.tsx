@@ -55,9 +55,9 @@ export default function AnalyticsPage() {
     setIsLoading(true);
     try {
       const [instRes, retryRes, replayRes] = await Promise.all([
-        fetch('http://127.0.0.1:8000/api/v1/analytics/endpoints/instability'),
-        fetch('http://127.0.0.1:8000/api/v1/analytics/retry/patterns'),
-        fetch('http://127.0.0.1:8000/api/v1/analytics/replays')
+        fetch('https://hookwatch-backend.onrender.com/api/v1/analytics/endpoints/instability'),
+        fetch('https://hookwatch-backend.onrender.com/api/v1/analytics/retry/patterns'),
+        fetch('https://hookwatch-backend.onrender.com/api/v1/analytics/replays')
       ]);
 
       if (instRes.ok && retryRes.ok && replayRes.ok) {

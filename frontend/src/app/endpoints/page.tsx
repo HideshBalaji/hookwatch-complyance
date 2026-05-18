@@ -29,7 +29,7 @@ export default function Endpoints() {
   const fetchEndpoints = async (userId: string) => {
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/auth/endpoints?user_id=${userId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/auth/endpoints?user_id=${userId}`,
       );
       if (res.ok) {
         setEndpoints(await res.json());

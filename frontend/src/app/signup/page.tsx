@@ -19,7 +19,7 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/auth/signup", {
+      const res = await fetch("https://hookwatch-backend.onrender.com/api/v1/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

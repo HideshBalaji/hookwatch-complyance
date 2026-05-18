@@ -58,7 +58,7 @@ export default function ImportData() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/webhooks/upload/csv?user_id=${userId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/csv?user_id=${userId}`,
         {
           method: "POST",
           body: formData,
@@ -76,7 +76,7 @@ export default function ImportData() {
         const interval = setInterval(async () => {
           try {
             const statusRes = await fetch(
-              `http://127.0.0.1:8000/api/v1/webhooks/upload/status/${taskId}`,
+              `https://hookwatch-backend.onrender.com/api/v1/webhooks/upload/status/${taskId}`,
             );
             if (statusRes.ok) {
               const statusData = await statusRes.json();
@@ -129,7 +129,7 @@ export default function ImportData() {
       const endpoint = activeTab === "json_bulk" ? "upload/bulk" : "upload";
 
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/webhooks/${endpoint}?user_id=${userId}`,
+        `https://hookwatch-backend.onrender.com/api/v1/webhooks/${endpoint}?user_id=${userId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
